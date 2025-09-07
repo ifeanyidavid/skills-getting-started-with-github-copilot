@@ -4,6 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
+  function formatParticipantEmail(email) {
+    return `<li><span class=\"participant-badge\">${email
+      .split("@")[0]
+      .replace(/\b\w/g, (l) => l.toUpperCase())}</span> <span class=\"participant-email\">&lt;${email}&gt;</span></li>`;
+  }
+
   // Function to fetch activities from API
   async function fetchActivities() {
     try {
@@ -28,13 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
               <strong>Participants:</strong>
               <ul class="participants-list">
                 ${details.participants
-                  .map(
-                    (email) =>
-                      `<li><span class=\"participant-badge\">${email
-                        .split("@")[0]
-                        .replace(/\b\w/g, (l) => l.toUpperCase())}</span> <span class=\"participant-email\">&lt;${email}&gt;</span></li>`
-                  )
-                  .join("")}
+              .map(formatParticipantEmail)
+              .join("")}
               </ul>
             </div>
           `;
